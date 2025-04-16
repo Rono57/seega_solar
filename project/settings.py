@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 SECRET_KEY = os.environ.get('SECRET_KEY', 'your-default-secret-key')
-ALLOWED_HOSTS = ['*']  # Update to ['yourapp.onrender.com'] after deployment
+ALLOWED_HOSTS = ['https://seega-solar.onrender.com']  # Update to ['yourapp.onrender.com'] after deployment
 
 
 # Application definition
