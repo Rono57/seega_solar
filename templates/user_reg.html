@@ -1,0 +1,316 @@
+{% include 'home_header.html' %}
+
+<div class="container1 mt-5">
+    <div class="registration-card shadow-lg">
+        <h2 class="text-center mb-4">User Registration</h2>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form method="post" class="registration-form" onsubmit="return validateForm()">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="name" class="form-label">Full Name:</label>
+                <input type="text" id="name" name="name" required class="form-control" placeholder="Enter your full name">
+                <div class="error-message" id="name-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" id="email" name="email" required class="form-control" placeholder="Enter your email">
+                <div class="error-message" id="email-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone" class="form-label">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required class="form-control" placeholder="Enter your 10-digit phone number" pattern="[0-9]{10}" maxlength="10">
+                <div class="error-message" id="phone-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="address" class="form-label">Address:</label>
+                <textarea id="address" name="address" required class="form-control" placeholder="Enter your address" rows="4"></textarea>
+                <div class="error-message" id="address-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" id="username" name="username" required class="form-control" placeholder="Choose a username" minlength="4">
+                <div class="error-message" id="username-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" id="password" name="password" required class="form-control" placeholder="Create a password" minlength="6">
+                <div class="error-message" id="password-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password" class="form-label">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required class="form-control" placeholder="Confirm your password">
+                <div class="error-message" id="confirm-password-error"></div>
+            </div>
+
+            <div class="form-group text-center">
+                <button type="submit" class="submit-button">Register</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% include 'footer.html' %}
+
+<!-- Styles -->
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container1 {
+        max-width: 700px;
+        margin: 80px auto;
+        padding: 0 20px;
+    }
+
+    .registration-card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 2.5rem;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+
+    .registration-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .registration-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(to right, #007bff, #28a745);
+    }
+
+    h2 {
+        color: #2c3e50;
+        font-size: 2.25rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-bottom: 2rem;
+    }
+
+    .messages {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 1.5rem;
+    }
+
+    .messages li {
+        padding: 0.75rem 1rem;
+        border-radius: 6px;
+        margin-bottom: 0.75rem;
+        font-size: 0.95rem;
+    }
+
+    .messages .error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    .messages .success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .registration-form .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .registration-form .form-label {
+        color: #2c3e50;
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .registration-form .form-control {
+        width: 100%;
+        padding: 0.9rem;
+        font-size: 1rem;
+        border: 2px solid #dee2e6;
+        border-radius: 8px;
+        background: #f8f9fa;
+        color: #333;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .registration-form .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+        outline: none;
+    }
+
+    .registration-form .form-control::placeholder {
+        color: #adb5bd;
+        font-style: italic;
+    }
+
+    .registration-form textarea.form-control {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .submit-button {
+        width: 100%;
+        padding: 0.9rem;
+        background: linear-gradient(45deg, #007bff, #00aaff);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+    }
+
+    .submit-button:hover {
+        background: linear-gradient(45deg, #0056b3, #0088cc);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
+    }
+
+    .error-message {
+        color: #dc3545;
+        font-size: 0.85rem;
+        margin-top: 0.25rem;
+        display: none;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .container1 {
+            margin: 50px auto;
+            padding: 0 15px;
+        }
+
+        .registration-card {
+            padding: 2rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+        }
+
+        .form-control {
+            font-size: 0.95rem;
+            padding: 0.85rem;
+        }
+
+        .submit-button {
+            padding: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .form-label {
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .registration-card {
+            padding: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+
+<!-- JavaScript Validation -->
+<script>
+function validateForm() {
+    let isValid = true;
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm_password').value;
+
+    // Reset error messages
+    document.querySelectorAll('.error-message').forEach(msg => msg.style.display = 'none');
+
+    // Name validation (letters and spaces only, min 2 characters)
+    if (!/^[a-zA-Z\s]{2,}$/.test(name)) {
+        document.getElementById('name-error').textContent = 'Name must be at least 2 characters and contain only letters and spaces.';
+        document.getElementById('name-error').style.display = 'block';
+        isValid = false;
+    }
+
+    // Email validation (basic email format)
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('email-error').textContent = 'Please enter a valid email address.';
+        document.getElementById('email-error').style.display = 'block';
+        isValid = false;
+    }
+
+    // Phone validation (exactly 10 digits)
+    if (!/^[0-9]{10}$/.test(phone)) {
+        document.getElementById('phone-error').textContent = 'Phone number must be exactly 10 digits.';
+        document.getElementById('phone-error').style.display = 'block';
+        isValid = false;
+    }
+
+    // Address validation (minimum 5 characters)
+    if (address.length < 5) {
+        document.getElementById('address-error').textContent = 'Address must be at least 5 characters long.';
+        document.getElementById('address-error').style.display = 'block';
+        isValid = false;
+    }
+
+    // Username validation (4+ characters, alphanumeric)
+    if (!/^[a-zA-Z0-9]{4,}$/.test(username)) {
+        document.getElementById('username-error').textContent = 'Username must be at least 4 characters and alphanumeric.';
+        document.getElementById('username-error').style.display = 'block';
+        isValid = false;
+    }
+
+    // Password validation (minimum 6 characters)
+    if (password.length < 6) {
+        document.getElementById('password-error').textContent = 'Password must be at least 6 characters long.';
+        document.getElementById('password-error').style.display = 'block';
+        isValid = false;
+    }
+
+    // Confirm Password validation (must match password)
+    if (password !== confirmPassword) {
+        document.getElementById('confirm-password-error').textContent = 'Passwords do not match.';
+        document.getElementById('confirm-password-error').style.display = 'block';
+        isValid = false;
+    }
+
+    return isValid;
+}
+</script>

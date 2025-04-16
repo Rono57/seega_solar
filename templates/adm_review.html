@@ -1,0 +1,46 @@
+{% include 'admin_header.html' %}
+
+<div class="container mt-4">
+    <div class="card shadow p-4">
+        <h2 class="text-center mb-4">Customer Reviews</h2>
+        <table class="table table-bordered text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Comment</th>
+                    <th>Rating</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for review in reviews %}
+                <tr>
+                    <td>{{ review.comment }}</td>
+                    <td>
+                        {% for i in "12345"|make_list %}
+                            {% if i|add:"0" <= review.rating %}
+                                <span class="text-warning">&#9733;</span>
+                            {% else %}
+                                <span class="text-muted">&#9734;</span>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ review.created_at|date:"d M Y, h:i A" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="text-muted">No reviews available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% include 'footer.html' %}
+
+
+<style>
+    td{
+        color: black;
+    }
+</style>

@@ -1,0 +1,113 @@
+{% include 'user_header.html' %}
+
+<h2 class="heading">Packages List</h2>
+<div class="table-container">
+    <table class="items-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Items</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for package in packages %}
+            <tr>
+                <td>{{ package.name }}</td>
+                <td>{{ package.description }}</td>
+                <td>Rs {{ package.price }}</td>
+                <td>
+                    {% for item in package.items.all %}
+                        <span class="item">{{ item.name }}</span>
+                    {% endfor %}
+                </td>
+                <td><a href="/send_request/{{package.pk}}" class="request-btn">Send Request</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% include 'footer.html' %}
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .heading {
+        text-align: center;
+        font-size: 26px;
+        font-weight: bold;
+        margin: 20px 0;
+    }
+    
+    .table-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .items-table {
+        width: 90%; /* Increased width */
+        border-collapse: collapse;
+        background: #ffffff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .items-table th, .items-table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .items-table th {
+        background: #007bff;
+        color: #ffffff;
+        font-size: 18px;
+    }
+
+    .items-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .items-table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .item {
+        display: inline-block;
+        background: #007bff;
+        color: white;
+        padding: 5px 10px;
+        margin: 2px;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .request-btn {
+        display: inline-block;
+        background: #28a745;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .request-btn:hover {
+        background: #218838;
+    }
+
+    td {
+        color: black;
+    }
+</style>

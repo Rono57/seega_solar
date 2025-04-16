@@ -1,0 +1,268 @@
+{% include 'admin_header.html' %}
+
+<div class="container">
+    <div class="form-section">
+        <h2>Add New Item</h2>
+        <form method="post" class="form-style">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" required class="input-field" placeholder="Enter item name">
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <input type="text" name="category" id="category" required class="input-field" placeholder="Enter category">
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" name="price" id="price" required class="input-field" placeholder="Enter price" step="0.01">
+            </div>
+            <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <input type="number" name="quantity" id="quantity" required class="input-field" placeholder="Enter quantity" min="0">
+            </div>
+            <div class="form-group">
+                <label for="vendor">Vendor</label>
+                <select name="vendor" id="vendor" required class="input-field">
+                    <option value="">Select Vendor</option>
+                    {% for vendor in vendors %}
+                    <option value="{{ vendor.id }}">{{ vendor.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-actions">
+                <button type="submit" name="submit" class="submit-button">Add Item</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="table-section">
+        <h2>Items List</h2>
+        <div class="table-wrapper">
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Vendor</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.category }}</td>
+                        <td>Rs {{ item.price }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.vendor }}</td>
+                        <td>
+                            <a href="{% url 'edit_item' item.id %}" class="btn btn-edit">Edit</a>
+                            <a href="{% url 'delete_item' item.id %}" class="btn btn-delete">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 60px auto;
+        padding: 0 20px;
+    }
+
+    h2 {
+        color: #2c3e50;
+        font-size: 2rem;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 2rem;
+        letter-spacing: 0.5px;
+    }
+
+    /* Form Styling */
+    .form-section {
+        margin-bottom: 4rem;
+    }
+
+    .form-style {
+        background: #ffffff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        color: #333;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .input-field {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        color: #333;
+        transition: border-color 0.2s ease;
+    }
+
+    .input-field:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+
+    .input-field::placeholder {
+        color: #6c757d;
+        opacity: 0.7;
+    }
+
+    .form-actions {
+        text-align: center;
+    }
+
+    .submit-button {
+        background: #28a745;
+        color: white;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 1rem;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .submit-button:hover {
+        background: #218838;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Table Styling */
+    .table-section {
+        margin-bottom: 2rem;
+    }
+
+    .table-wrapper {
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow-x: auto;
+    }
+
+    .items-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .items-table th {
+        background: #2c3e50;
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+        padding: 1rem;
+        border-bottom: 2px solid #1a252f;
+    }
+
+    .items-table td {
+        padding: 1rem;
+        vertical-align: middle;
+        color: #333;
+        font-size: 0.95rem;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .items-table tbody tr:nth-child(even) {
+        background: #f8f9fa;
+    }
+
+    .items-table tbody tr:hover {
+        background: #e9ecef;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn {
+        padding: 0.5rem 1.5rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        display: inline-block;
+        margin: 0.25rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-edit {
+        background: #007bff;
+        color: white;
+    }
+
+    .btn-delete {
+        background: #dc3545;
+        color: white;
+    }
+
+    .btn-edit:hover {
+        background: #0069d9;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-delete:hover {
+        background: #c82333;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .form-style {
+            padding: 1.5rem;
+        }
+
+        .items-table th,
+        .items-table td {
+            padding: 0.75rem;
+            font-size: 0.85rem;
+        }
+
+        .btn {
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+    }
+</style>

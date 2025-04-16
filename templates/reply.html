@@ -1,0 +1,132 @@
+{% include 'admin_header.html' %}
+
+<div class="container">
+    <div class="reply-form-wrapper">
+        <h2 class="form-title">Send Your Response</h2>
+        <form method="post" class="reply-form">
+            {% csrf_token %} <!-- Added for security if using Django -->
+            <div class="form-group">
+                <label for="rep" class="form-label">Response Message</label>
+                <textarea name="rep" id="rep" required class="form-control" placeholder="Type your response here..."></textarea>
+            </div>
+            <div class="form-actions">
+                <button type="submit" name="submit" class="btn btn-primary">Submit Response</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% include 'footer.html' %}
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Arial', sans-serif;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 60px auto;
+        padding: 0 20px;
+    }
+
+    .reply-form-wrapper {
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+
+    .form-title {
+        color: #2c3e50;
+        font-size: 1.8rem;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 2rem;
+        letter-spacing: 0.5px;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        color: #333;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .thing {
+        width: 100%;
+        min-height: 150px;
+        padding: 1rem;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        color: #333;
+        resize: vertical;
+        transition: border-color 0.2s ease;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+
+    .form-control::placeholder {
+        color: #6c757d;
+        opacity: 0.7;
+    }
+
+    .form-actions {
+        text-align: center;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 1rem;
+        color: white;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0069d9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-primary:active {
+        transform: translateY(0);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .reply-form-wrapper {
+            padding: 1.5rem;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+        }
+
+        .btn-primary {
+            padding: 0.6rem 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            font-size: 0.9rem;
+        }
+    }
+</style>

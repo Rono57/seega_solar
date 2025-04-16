@@ -1,0 +1,50 @@
+{% include 'staff_header.html' %}
+
+<div class="container mt-4">
+    <div class="card shadow p-4">
+        <h2 class="text-center mb-4">Packages List</h2>
+        <table class="table table-bordered text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Materials Used</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for package in packages %}
+                <tr>
+                    <td>{{ package.order.package.name }}</td>
+                    <td>{{ package.order.package.description }}</td>
+                    <td><strong>Rs {{ package.order.package.price }}</strong></td>
+                    <td>
+                        {% for item in package.materials_used.all %}
+                            <span class="badge bg-primary">{{ item.name }}</span>
+                        {% empty %}
+                            <span class="text-muted">No materials added yet.</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-muted">No packages assigned yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% include 'footer.html' %}
+
+<style>
+    td {
+        color: black;
+    }
+    .badge {
+        font-size: 14px;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+</style>

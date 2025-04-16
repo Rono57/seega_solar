@@ -1,0 +1,204 @@
+{% include 'user_header.html' %}
+
+<div class="container mt-5">
+    <div class="table-wrapper">
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th>Package Name</th>
+                    <th>Package Description</th>
+                    <th>Items</th>
+                    <th>Package Price</th>
+                    <th>Estimated Price</th>
+                    <th>Payment Status</th>
+                    <th>Action</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in a %}
+                <tr>
+                    <td>{{ i.package.name }}</td>
+                    <td>{{ i.package.description }}</td>
+                    <td>
+                        {% for item in i.package.items.all %}
+                            <span class="item">{{ item.name }}</span>{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>Rs {{ i.package.price }}</td>
+                    <td>Rs {{ i.estimate_price }}</td>
+                    <td>
+                        {% if i.payment_status %}
+                            <span class="status paid">Paid</span>
+                        {% else %}
+                            <span class="status pending">Pending</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if i.estimate_price == 0.00 %}
+                        <a href="/send_estimate/{{ i.pk }}" class="btn btn-success">Send Estimate</a>
+                        {% endif %}
+                    </td>
+                  
+                    {% if i.estimate_price != 0.00 and i.payment_status != 1 and i.confirmed == 1%}
+                        <td>
+                            <a href="/make_payment/{{ i.pk }}" class="btn request-btn">Make Payment</a>
+                        </td>
+                       
+                    {% else %}
+                        <td><a href="/remove/{{i.pk}}" class="btn btn-danger">Remove</a></td>
+                        <td></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% include 'footer.html' %}
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 60px auto;
+        padding: 0 20px;
+    }
+
+    .table-wrapper {
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow-x: auto;
+    }
+
+    .items-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .items-table th {
+        background: #2c3e50;
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+        padding: 1rem;
+        border-bottom: 2px solid #1a252f;
+    }
+
+    .items-table td {
+        padding: 1rem;
+        vertical-align: middle;
+        color: #333;
+        font-size: 0.95rem;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .items-table tbody tr:nth-child(even) {
+        background: #f8f9fa;
+    }
+
+    .items-table tbody tr:hover {
+        background: #e9ecef;
+        transition: background-color 0.2s ease;
+    }
+
+    .item {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        margin: 0.2rem;
+        background: #e9ecef;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        color: #333;
+    }
+
+    .status {
+        padding: 0.4rem 0.8rem;
+        border-radius: 12px;
+        font-weight: 500;
+        font-size: 0.85rem;
+        display: inline-block;
+        min-width: 60px;
+        text-align: center;
+    }
+
+    .paid {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .pending {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .btn {
+        padding: 0.5rem 1.5rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        display: inline-block;
+        transition: all 0.3s ease;
+        color: white;
+    }
+
+    .request-btn {
+        background: #28a745;
+    }
+
+    .request-btn:hover {
+        background: #218838;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .reject-btn {
+        background: #dc3545;
+    }
+
+    .reject-btn:hover {
+        background: #c82333;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .container {
+            margin: 40px auto;
+            padding: 0 15px;
+        }
+
+        .items-table th,
+        .items-table td {
+            padding: 0.75rem;
+            font-size: 0.85rem;
+        }
+
+        .btn {
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+        }
+
+        .item {
+            font-size: 0.8rem;
+        }
+
+        .status {
+            font-size: 0.8rem;
+            padding: 0.3rem 0.6rem;
+        }
+    }
+</style>

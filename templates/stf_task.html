@@ -1,0 +1,52 @@
+{% include 'staff_header.html' %}
+
+<div class="container mt-4">
+    <div class="card shadow p-4">
+        <h2 class="text-center mb-4">Assigned Tasks</h2>
+        <table class="table table-bordered text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Package</th>
+                    <th>Description</th>
+                    <th>Estimated Price</th>
+                    <th>Assigned Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr>
+                    <td>{{ task.order.package.name }}</td>
+                    <td>{{ task.order.package.description }}</td>
+                    <td><strong>Rs {{ task.order.estimate_price }}</strong></td>
+                    <td>{{ task.updated_at|date:"d M Y, h:i A" }}</td>
+                    <td>
+                        <a href="/st_used/{{ task.pk }}" class="btn btn-primary btn-sm">Update Material Used</a>
+                        <a href="/st_pack/{{ task.order_id }}" class="btn btn-info btn-sm">View Packages</a>
+                        {% if task.status == 'pending' %}
+                        <a href="/up_com/{{task.pk}}" class="btn btn-warning">Update Status</a>
+                        {% endif %}
+                        
+                    </td>
+                   
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-muted">No tasks assigned yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% include 'footer.html' %}
+
+<style>
+    td {
+        color: black;
+    }
+    .btn-sm {
+        margin: 3px;
+    }
+</style>

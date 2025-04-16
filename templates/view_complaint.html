@@ -1,0 +1,24 @@
+{% include 'admin_header.html' %}
+
+<center>
+    <table>
+        <tr>
+            <th>User</th>
+            <th>Message</th>
+            <th>Reply</th>
+            <th>Date</th>
+        </tr>
+        {% for complaint in complaints %}
+        <tr>
+            <td>{{ complaint.user }}</td>
+            <td>{{ complaint.message }}</td>
+            <td>{{ complaint.reply }}</td>
+            <td>{{ complaint.created_at }}</td>
+            <a href="/reply/{{i.pk}}" class="btn btn-primary btn-sm">Reply</a>
+            
+        </tr>
+        {% endfor %}
+    </table>
+</center>
+
+{% include 'footer.html' %}

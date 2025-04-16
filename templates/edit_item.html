@@ -1,0 +1,131 @@
+{% include 'admin_header.html' %}
+
+<center>
+    <div class="container">
+        <h2 class="page-title">Edit Item: {{ item.name }}</h2>
+        <form method="post" class="form-style">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <td><input type="text" name="name" value="{{ item.name }}" required class="input-field"></td>
+                </tr>
+                <tr>
+                    <th>Category</th>
+                    <td><input type="text" name="category" value="{{ item.category }}" required class="input-field"></td>
+                </tr>
+                <tr>
+                    <th>Price</th>
+                    <td><input type="number" name="price" value="{{ item.price }}" required class="input-field"></td>
+                </tr>
+                <tr>
+                    <th>Quantity</th>
+                    <td><input type="number" name="quantity" value="{{ item.quantity }}" required class="input-field"></td>
+                </tr>
+                <tr>
+                    <th>Vendor</th>
+                    <td>
+                        <select name="vendor" required class="input-field">
+                            {% for vendor in vendors %}
+                                <option value="{{ vendor.id }}" {% if vendor == item.vendor %} selected {% endif %}>{{ vendor.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" name="submit" value="Update Item" class="submit-button"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</center>
+
+{% include 'footer.html' %}
+
+<style>
+    .container {
+        width: 80%;
+        max-width: 900px;
+        margin: 20px auto;
+        font-family: 'Arial', sans-serif;
+        background-color: #f9f9f9;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .page-title {
+        font-size: 28px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .form-style {
+        width: 100%;
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #fff;
+    }
+
+    .form-style table {
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    .form-style th {
+        text-align: left;
+        font-size: 16px;
+        color: #4CAF50;
+        padding: 10px;
+        font-weight: 500;
+    }
+
+    .form-style td {
+        padding: 10px;
+    }
+
+    .input-field {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        margin-top: 8px;
+    }
+
+    .input-field:focus {
+        border-color: #4CAF50;
+        outline: none;
+    }
+
+    .submit-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    .submit-button:hover {
+        background-color: #45a049;
+    }
+
+    table th, table td {
+        padding: 10px 20px;
+        text-align: left;
+    }
+
+    select.input-field {
+        background-color: #fff;
+    }
+
+    select.input-field option {
+        padding: 10px;
+    }
+</style>

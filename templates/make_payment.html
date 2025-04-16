@@ -1,0 +1,90 @@
+{% include 'user_header.html' %}
+
+<center>
+    <form method="post">
+        <table>
+            <tr>
+                <th>Card Number</th>
+                <td>
+                    <input type="text" name="card_number" required class="input-field"
+                           pattern="[0-9]{16}" maxlength="16"
+                           placeholder="Enter 16-digit card number">
+                </td>
+            </tr>
+            <tr>
+                <th>Expiry Date</th>
+                <td>
+                    <input type="month" name="expiry_date" required class="input-field">
+                </td>
+            </tr>
+            <tr>
+                <th>CVV</th>
+                <td>
+                    <input type="password" name="cvv" required class="input-field"
+                           pattern="[0-9]{3,4}" maxlength="4"
+                           placeholder="Enter 3 or 4-digit CVV">
+                </td>
+            </tr>
+            <tr>
+                <th>Amount</th>
+                <td><input type="number" value="{{ am }}" name="amount" required readonly class="input-field"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" name="submit" value="Make Payment" class="submit-button">
+                </td>
+            </tr>
+        </table>
+    </form>
+</center>
+
+{% include 'footer.html' %}
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    table {
+        width: 40%;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        border-collapse: collapse;
+        margin-top: 30px;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        color: #333;
+    }
+
+    .input-field {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .submit-button {
+        background: #28a745;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .submit-button:hover {
+        background: #218838;
+    }
+</style>

@@ -1,0 +1,45 @@
+{% include 'staff_header.html' %}
+
+<div class="container mt-4">
+    <div class="card shadow p-4">
+        <h2 class="text-center mb-4">Materials Used for Task #{{ task.id }}</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="item" class="form-label"><strong>Select Item:</strong></label>
+                <select name="item" class="form-select" required>
+                    <option value="">Select</option>
+                    {% for i in a %}
+                    <option value="{{ i.id }}">{{ i.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Material</button>
+        </form>
+
+        <hr>
+
+        <h3 class="mt-4">Materials Used</h3>
+        <table class="table table-bordered text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Item</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in b %}
+                <tr>
+                    <td>{{ i.name }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td class="text-muted">No materials used yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% include 'footer.html' %}

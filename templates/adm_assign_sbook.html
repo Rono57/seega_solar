@@ -1,0 +1,95 @@
+{% include 'admin_header.html' %}
+
+<div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; background-color: #f5f7fa; min-height: 100vh;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <div style="background-color: white; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden; margin-bottom: 30px;">
+            <div style="background-color: #3498db; padding: 20px; color: white;">
+                <h2 style="margin: 0; font-size: 22px;">
+                    <span style="margin-right: 10px;">👥</span>
+                    Staff Assignment Management
+                </h2>
+            </div>
+            
+            <div style="padding: 25px;">
+                {% if z %}
+                <!-- Assigned Staff Section -->
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #2980b9; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px;">
+                        <span style="margin-right: 10px;">✔️</span>
+                        Currently Assigned Staff
+                    </h3>
+                    
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead style="background-color: #f8f9fa;">
+                                <tr>
+                                    <th style="padding: 12px 15px; text-align: left; border-bottom: 2px solid #eee; color: #555;">Staff Name</th>
+                                    <th style="padding: 12px 15px; text-align: left; border-bottom: 2px solid #eee; color: #555;">Email</th>
+                                    <th style="padding: 12px 15px; text-align: left; border-bottom: 2px solid #eee; color: #555;">Phone</th>
+                                    <th style="padding: 12px 15px; text-align: left; border-bottom: 2px solid #eee; color: #555;">Position</th>
+                                    <th style="padding: 12px 15px; text-align: left; border-bottom: 2px solid #eee; color: #555;">Assigned Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in z %}
+                                <tr style="border-bottom: 1px solid #eee; transition: all 0.3s ease;">
+                                    <td style="padding: 12px 15px;">{{ i.staff.name }}</td>
+                                    <td style="padding: 12px 15px;">{{ i.staff.email }}</td>
+                                    <td style="padding: 12px 15px;">{{ i.staff.phone }}</td>
+                                    <td style="padding: 12px 15px;">
+                                        <span style="background-color: #d4edff; color: #004085; padding: 3px 8px; border-radius: 4px; font-size: 13px;">
+                                            {{ i.staff.position }}
+                                        </span>
+                                    </td>
+                                    <td style="padding: 12px 15px;">{{ i.adate }}</td>
+                                </tr>
+                                {% endfor %}
+                                {% if not a %}
+                                <tr>
+                                    <td colspan="5" style="padding: 30px 15px; text-align: center; color: #777;">
+                                        <div style="font-size: 50px; margin-bottom: 10px;">👋</div>
+                                        No staff currently assigned
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% else %}
+                
+                <!-- Assignment Form Section -->
+                <div style="background-color: #f8f9fa; padding: 25px; border-radius: 8px;">
+                    <h3 style="color: #27ae60; margin-bottom: 20px;">
+                        <span style="margin-right: 10px;">➕</span>
+                        Assign New Staff Member
+                    </h3>
+                    
+                    <form method="post" style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                        <div style="flex-grow: 1; min-width: 250px;">
+                            <label style="display: block; margin-bottom: 8px; color: #555; font-weight: 500;">Select Staff</label>
+                            <select name="sid" style="width: 100%; padding: 10px 15px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px; background-color: white;">
+                                {% for i in a %}
+                                <option value="{{i.pk}}">{{i.name}} ({{i.position}})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div style="align-self: flex-end;">
+                            <button type="submit" name="submit" style="background-color: #27ae60; color: white; border: none; padding: 10px 25px; border-radius: 5px; cursor: pointer; font-size: 15px; transition: background-color 0.3s;">
+                                Assign Staff
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div style="background-color: #f8f9fa; padding: 15px 25px; border-top: 1px solid #eee; color: #777; font-size: 14px;">
+                <span style="margin-right: 10px;">⏱️</span>
+                Last updated: {% now "DATETIME_FORMAT" %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}

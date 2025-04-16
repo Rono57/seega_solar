@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assigned Staff Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- User Header Wrapper -->
+    <div class="w-full">
+        {% include 'user_header.html' %}
+    </div>
+
+    <div class="flex-1 bg-gray-100">
+        <div class="container mx-auto px-4 py-8">
+            <!-- Assigned Staff Section -->
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">Assigned Staff Details</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Staff Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assigned Date</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            {% for i in a %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ i.staff.name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ i.staff.email }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ i.staff.phone }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ i.staff.position }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ i.adate }}</td>
+                            </tr>
+                            {% endfor %}
+                            {% if not a %}
+                            <tr>
+                                <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">No staff assigned</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Bookings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Admin Header Wrapper -->
+    <div class="w-full">
+        {% include 'admin_header.html' %}
+    </div>
+
+    <div class="flex-1 bg-gray-100">
+        <div class="container mx-auto px-4 py-8">
+            <!-- Service Bookings Section -->
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">Service Bookings</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User Email</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User Phone</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                       
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            {% for i in a %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ i.user.name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ i.user.email }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ i.user.phone }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ i.service.sname }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ i.date }}</td>
+                   
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    {% if i.status == 'Pending' %}
+                                        <a href="/assign_sbook/{{ i.pk }}" 
+                                           class="text-indigo-600 hover:text-indigo-800 font-medium">
+                                            Assign Staff
+                                        </a>
+                                    {% else %}
+                                        <span class="text-gray-400">N/A</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% if not a %}
+                            <tr>
+                                <td colspan="7" class="px-6 py-4 text-center text-sm text-gray-500">No service bookings available</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>

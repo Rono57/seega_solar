@@ -1,0 +1,215 @@
+{% include 'admin_header.html' %}
+
+<div class="container">
+    <h2>Order Management</h2>
+    <div class="table-wrapper">
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th>Package Name</th>
+                    <th>Package Description</th>
+                    <th>Items</th>
+                    <th>Package Price</th>
+                    <th>Estimated Price</th>
+                    <th>Payment Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in a %}
+                <tr>
+                    <td>{{ i.package.name }}</td>
+                    <td>{{ i.package.description }}</td>
+                    <td>
+                        {% for item in i.package.items.all %}
+                            <span class="item">{{ item.name }}</span>{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>Rs {{ i.package.price }}</td>
+                    <td>Rs {{ i.estimate_price }}</td>
+                    <td>
+                        {% if i.payment_status %}
+                            <span class="status paid">Paid</span>
+                        {% else %}
+                            <span class="status pending">Pending</span>
+                        {% endif %}
+                    </td>
+                    {% if i.estimate_price != 0.00 and i.confirmed != 1 and i.payment_status != 1 %}
+                    <td>
+                  <a href="/approve_order/{{i.pk}}" class="btn btn-success">Approve</a>
+                  
+                </td>
+
+                <td>
+                    <a href="/reject/{{ i.pk }}" class="btn btn btn-danger">Reject</a>
+                </td>
+              
+
+
+                    {% endif %}
+                   
+                    <td class="action-cell">
+                      
+                        {% if i.payment_status == 1 %}
+                            <a href="/assign_worker/{{i.pk}}" class="btn btn-primary">Assign Worker</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% include 'footer.html' %}
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 60px auto;
+        padding: 0 20px;
+    }
+
+    h2 {
+        color: #2c3e50;
+        font-size: 2rem;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 2rem;
+        letter-spacing: 0.5px;
+    }
+
+    .table-wrapper {
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow-x: auto;
+    }
+
+    .items-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .items-table th {
+        background: #2c3e50;
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+        padding: 1rem;
+        border-bottom: 2px solid #1a252f;
+    }
+
+    .items-table td {
+        padding: 1rem;
+        vertical-align: middle;
+        color: #333;
+        font-size: 0.95rem;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .items-table tbody tr:nth-child(even) {
+        background: #f8f9fa;
+    }
+
+    .items-table tbody tr:hover {
+        background: #e9ecef;
+        transition: background-color 0.2s ease;
+    }
+
+    .item {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        margin: 0.2rem;
+        background: #e9ecef;
+        border-radius: 4px;
+        font-size: 0.85rem;
+    }
+
+    .status {
+        padding: 0.4rem 0.8rem;
+        border-radius: 12px;
+        font-weight: 500;
+        font-size: 0.85rem;
+        display: inline-block;
+        min-width: 60px;
+    }
+
+    .paid {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .pending {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .btn {
+        padding: 0.5rem 1.5rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+
+    .btn-success {
+        background: #28a745;
+        color: white;
+    }
+
+    .btn-primary {
+        background: #007bff;
+        color: white;
+    }
+
+    .btn-success:hover {
+        background: #218838;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary:hover {
+        background: #0069d9;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .action-cell {
+        min-width: 120px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .items-table th,
+        .items-table td {
+            padding: 0.75rem;
+            font-size: 0.85rem;
+        }
+
+        .btn {
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        .item {
+            font-size: 0.8rem;
+        }
+    }
+</style>
